@@ -6,13 +6,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 
 public interface Webui extends Library {
-  Webui INSTANCE = (Webui) Native.load("webui-2.dll", Webui.class);
-
-  int webui_new_window();
-
-  void webui_show(int windoP, String html);
-
-  void webui_wait();
+  Webui INSTANCE = (Webui) Native.load("rel/webui-2.dll", Webui.class);
 
   // -- Enums ---------------------------
   enum webui_browser {
@@ -87,23 +81,22 @@ public interface Webui extends Library {
     asynchronous_response
   };
 
+  /**
+   * Maps the C struct `webui_event_t`. This structure holds information about an
+   * event.
+   */
+  @Structure.FieldOrder({ "window", "event_type", "element", "event_number", "bind_id", "client_id", "connection_id",
+      "cookies" })
   class WebUIEventT extends Structure {
     public int window; // The window object number
     public int event_type; // Event type
-    public String element; // HTML element ID
+    public Pointer element; // HTML element ID
     public int event_number; // Internal WebUI event number
     public int bind_id; // Bind ID
     public int client_id; // Client's unique ID
     public int connection_id; // Client's connection ID
-    public String cookies; // Client's full cookies
+    public Pointer cookies; // Client's full cookies
 
-    public WebUIEventT() {
-    }
-
-    public WebUIEventT(Pointer p) {
-      super(p);
-      read();
-    }
   }
 
   // -- Callbacks --------------------------------------------------------------
@@ -135,5 +128,32 @@ public interface Webui extends Library {
   interface InterfaceCallback extends Callback {
     void invoke(int window, int event_type, String element, int event_number, int bind_id);
   }
+
+  // -- Definitions ---------------------
+  int webui_new_window();
+
+  boolean webui_show(int window, String content);
+
+  void webui_wait();
+
+  void webui_minimize(int window);
+
+  void webui_maximize(int window);
+
+  void webui_close(int window);
+
+  void webui_set_size(int window, int width, int height);
+
+  void webui_set_frameless(int window, boolean status);
+
+  void webui_set_transparent(int window, boolean status);
+
+  void webui_set_resizable(int window, boolean status);
+
+  void webui_set_center(int window);
+
+  void webui_show_wv(int window, String content);
+
+  int webui_bind(int window, String element, EventCallback func);
 
 }
