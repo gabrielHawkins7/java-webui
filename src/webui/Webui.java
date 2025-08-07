@@ -223,4 +223,118 @@ interface Webui extends Library {
 
   void webui_set_position(int window, int x, int y);
 
+  void webui_set_profile(int window, String name, String path);
+
+  void webui_set_proxy(int window, String proxy_server);
+
+  String webui_get_url(int window);
+
+  void webui_open_url(String url);
+
+  void webui_set_public(int window, boolean status);
+
+  void webui_navigate(int window, String url);
+
+  void webui_navigate_client(WebUIEventT e, String url);
+
+  void webui_clean();
+
+  void webui_delete_all_profiles();
+
+  void webui_delete_profile(int window);
+
+  int webui_get_parent_process_id(int window);
+
+  int webui_get_child_process_id(int window);
+
+  int webui_get_port(int window);
+
+  boolean webui_set_port(int window, int port);
+
+  int webui_get_free_port();
+
+  void webui_set_config(webui_config option, boolean status);
+
+  void webui_set_event_blocking(int window, boolean status);
+
+  String webui_get_mime_type(String file);
+
+  boolean webui_set_tls_certificate(String certificate_pem, String private_key_pem);
+
+  void webui_run(int window, String script);
+
+  void webui_run_client(WebUIEventT e, String script);
+
+  void webui_script(int window, String script, int timeout, String[] buffer, int buffer_length);
+
+  void webui_script_client(WebUIEventT e, String script, int timeout, String[] buffer, int buffer_length);
+
+  void webui_set_runtime(int window, webui_runtime runtime);
+
+  int webui_get_count(WebUIEventT e);
+
+  long webui_get_int_at(WebUIEventT e, int index);
+
+  long webui_get_int(WebUIEventT e);
+
+  double webui_get_float_at(WebUIEventT e, int index);
+
+  double webui_get_float(WebUIEventT e);
+
+  String webui_get_string_at(WebUIEventT e, int index);
+
+  String webui_get_string(WebUIEventT e);
+
+  boolean webui_get_bool_at(WebUIEventT e, int index);
+
+  boolean webui_get_bool(WebUIEventT e);
+
+  int webui_get_size_at(WebUIEventT e, int index);
+
+  int webui_get_size(WebUIEventT e);
+
+  void webui_return_int(WebUIEventT e, long n);
+
+  void webui_return_float(WebUIEventT e, double f);
+
+  void webui_return_string(WebUIEventT e, String s);
+
+  void webui_return_bool(WebUIEventT e, boolean b);
+
+  int webui_get_last_error_number();
+
+  String webui_get_last_error_message();
+
+  // Wrappers Interface
+  int webui_interface_bind(int window, String element, InterfaceCallback func);
+
+  void webui_interface_set_response(int window, int event_number, String response);
+
+  boolean webui_interface_is_app_runnint();
+
+  int webui_interface_get_window_id(int window);
+
+  String webui_interface_get_string_at(int window, int event_number, int index);
+
+  long webui_interface_get_int_at(int window, int event_number, int index);
+
+  double webui_interface_get_float_at(int window, int event_number, int index);
+
+  boolean webui_interface_get_bool_at(int window, int event_number, int index);
+
+  int webui_interface_get_size_at(int window, int event_number, int index);
+
+  boolean webui_interface_show_client(int window, int event_number, String content);
+
+  void webui_interface_close_client(int window, int event_number);
+
+  void webui_interface_send_raw_client(int window, int event_number, String function, Pointer raw, int size);
+
+  void webui_interface_navigate_client(int window, int event_number, String url);
+
+  void webui_interface_run_client(int window, int event_number, String script);
+
+  boolean webui_interface_script_client(int window, int event_number, String script, int timeour, String[] buffer,
+      int buffer_length);
+
 }
