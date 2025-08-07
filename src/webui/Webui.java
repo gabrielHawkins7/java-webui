@@ -7,7 +7,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 
 interface Webui extends Library {
-  Webui INSTANCE = (Webui) Native.load("rel/webui-2.dll", Webui.class);
+  Webui INSTANCE = (Webui) Native.load("rel/win-x86-64/webui-2.dll", Webui.class);
 
   // -- Enums ---------------------------
   enum webui_browser {
@@ -266,6 +266,7 @@ interface Webui extends Library {
 
   void webui_run_client(WebUIEventT e, String script);
 
+  // TODO: Not working? buffer issue
   void webui_script(int window, String script, int timeout, String[] buffer, int buffer_length);
 
   void webui_script_client(WebUIEventT e, String script, int timeout, String[] buffer, int buffer_length);

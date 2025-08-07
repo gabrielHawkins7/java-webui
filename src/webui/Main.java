@@ -1,12 +1,5 @@
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import com.sun.jna.NativeLong;
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.EnumUtils;
 
 public class Main {
 
@@ -18,7 +11,6 @@ public class Main {
     Webui.EventCallback handle_data = (e) -> {
       String value = lib.webui_get_string(e);
       System.out.println("Value From JS! " + value);
-      String[] response = new String[256];
       lib.webui_run(e.window, String.format("updateLog('JAVA: Received [ %s ] from JS')", value));
     };
 
