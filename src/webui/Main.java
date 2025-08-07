@@ -1,11 +1,17 @@
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import com.sun.jna.NativeLong;
 
 public class Main {
 
   static Webui lib = Webui.INSTANCE;
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, URISyntaxException {
     int win = lib.webui_new_window();
 
     Webui.EventCallback handle_data = (e) -> {
@@ -26,7 +32,10 @@ public class Main {
 
     lib.webui_bind(win, "getRandomNumber", getRandomNumber);
 
-    lib.webui_show(win, "index.html");
+    InputStream rawhtml = Main.class.getResourceAsStream("/index.html");
+    String html = new String(rawhtml.readAllBytes(), StandardCharsets.UTF_8);
+
+    lib.webui_show(win, html);
 
     lib.webui_bind(win, "closeWin", closeWin);
 
