@@ -5,8 +5,8 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 
-public interface Webui extends Library {
-  Webui INSTANCE = (Webui) Native.load("rel/webui-2.dll", Webui.class);
+interface Webui extends Library {
+  Webui INSTANCE = (Webui) Native.load("webui-2.dll", Webui.class);
 
   // -- Enums ---------------------------
   enum webui_browser {
@@ -23,7 +23,8 @@ public interface Webui extends Library {
     Epic, // 10. The Epic Browser
     Yandex, // 11. The Yandex Browser
     ChromiumBased, // 12. Any Chromium based browser
-    Webview, // 13. WebView (Non-web-browser)
+    Webview// 13. WebView (Non-web-browser)
+
   };
 
   enum webui_runtime {
@@ -155,5 +156,71 @@ public interface Webui extends Library {
   void webui_show_wv(int window, String content);
 
   int webui_bind(int window, String element, EventCallback func);
+
+  void webui_set_context(int window, String element, Pointer context);
+
+  Pointer webui_get_context(WebUIEventT e);
+
+  int webui_get_best_browser(int window);
+
+  boolean webui_show_client(WebUIEventT e, String content);
+
+  boolean webui_show_browser(int window, String content, int broswer);
+
+  String webui_start_server(int window, String content);
+
+  void webui_set_kiosk(int window, boolean status);
+
+  void webui_set_custom_parameters(int window, String[] params);
+
+  void webui_set_high_contrast(int window, boolean status);
+
+  boolean webui_is_high_contrast();
+
+  boolean webui_browser_exist(int browser);
+
+  void webui_close_client(WebUIEventT e);
+
+  void webui_destroy(int window);
+
+  void webui_exit();
+
+  boolean webui_set_root_folder(int window, String path);
+
+  void webui_set_broswer_folder(String path);
+
+  boolean webui_set_default_root_folder(String path);
+
+  void webui_set_file_handler(int window, FileHandler handler);
+
+  void webui_set_file_handler_window(int window, FileWindowHandler handler);
+
+  void webui_interface_set_response_file_handler(int window, Pointer response, int length);
+
+  boolean webui_is_shown(int window);
+
+  void webui_set_timeout(int second);
+
+  void webui_set_icon(int window, String icon, String icon_type);
+
+  Pointer webui_encode(String str);
+
+  Pointer webui_decode(String str);
+
+  void webui_free(Pointer ptr);
+
+  Pointer webui_malloc(int size);
+
+  void webui_memcpy(Pointer dest, Pointer src, int count);
+
+  void webui_send_raw(int window, String function, Pointer raw, int size);
+
+  void webui_send_raw_client(WebUIEventT e, String function, Pointer raw, int size);
+
+  void webui_set_hide(int window, boolean status);
+
+  void webui_set_minimum_size(int window, int width, int height);
+
+  void webui_set_position(int window, int x, int y);
 
 }
