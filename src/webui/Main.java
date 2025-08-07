@@ -18,6 +18,8 @@ public class Main {
     Webui.EventCallback handle_data = (e) -> {
       String value = lib.webui_get_string(e);
       System.out.println("Value From JS! " + value);
+      String[] response = new String[256];
+      lib.webui_run(e.window, String.format("updateLog('JAVA: Received [ %s ] from JS')", value));
     };
 
     lib.webui_bind(win, "handleData", handle_data);
