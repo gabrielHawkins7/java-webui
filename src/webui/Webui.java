@@ -1,12 +1,13 @@
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 
 interface Webui extends Library {
-  Webui INSTANCE = (Webui) Native.load("webui-2.dll", Webui.class);
+  Webui INSTANCE = (Webui) Native.load("rel/webui-2.dll", Webui.class);
 
   // -- Enums ---------------------------
   enum webui_browser {
@@ -273,9 +274,9 @@ interface Webui extends Library {
 
   int webui_get_count(WebUIEventT e);
 
-  long webui_get_int_at(WebUIEventT e, int index);
+  NativeLong webui_get_int_at(WebUIEventT e, int index);
 
-  long webui_get_int(WebUIEventT e);
+  NativeLong webui_get_int(WebUIEventT e);
 
   double webui_get_float_at(WebUIEventT e, int index);
 
@@ -293,7 +294,7 @@ interface Webui extends Library {
 
   int webui_get_size(WebUIEventT e);
 
-  void webui_return_int(WebUIEventT e, long n);
+  void webui_return_int(WebUIEventT e, NativeLong n);
 
   void webui_return_float(WebUIEventT e, double f);
 
@@ -316,7 +317,7 @@ interface Webui extends Library {
 
   String webui_interface_get_string_at(int window, int event_number, int index);
 
-  long webui_interface_get_int_at(int window, int event_number, int index);
+  NativeLong webui_interface_get_int_at(int window, int event_number, int index);
 
   double webui_interface_get_float_at(int window, int event_number, int index);
 
