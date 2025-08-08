@@ -7,7 +7,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 
 interface Webui extends Library {
-  Webui INSTANCE = (Webui) Native.load("rel/win-x86-64/webui-2.dll", Webui.class);
+  Webui INSTANCE = (Webui) Native.load("rel/lin-x64/libwebui-2.so", Webui.class);
 
   // -- Enums ---------------------------
   enum webui_browser {
