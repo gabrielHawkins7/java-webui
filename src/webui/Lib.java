@@ -8,7 +8,7 @@ import com.sun.jna.ptr.IntByReference;
 
 interface Lib extends Library {
 
-  Lib INSTANCE = (Lib) Native.load("debug/lin-x64/webui-2.so", Lib.class);
+  Lib INSTANCE = (Lib) Native.load("rel/lin-x64/webui-2.so", Lib.class);
 
   /**
    * @brief Create a new WebUI window object.
@@ -21,17 +21,19 @@ interface Lib extends Library {
 
   /**
    * @brief Show a window using embedded HTML, or a file. If the window is
-   * already
-   * open, it will be refreshed. This will refresh all windows in multi-client
-   * mode.
+   *        already
+   *        open, it will be refreshed. This will refresh all windows in
+   *        multi-client
+   *        mode.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param content The HTML, URL, Or a local file
    *
    * @return Returns True if showing the window is successed.
    *
    * @example webui_show(myWindow, "<html>...</html>"); |
-   * webui_show(myWindow, "index.html"); | webui_show(myWindow, "http://...");
+   *          webui_show(myWindow, "index.html"); | webui_show(myWindow,
+   *          "http://...");
    */
   boolean webui_show(int window, String content);
 
@@ -48,7 +50,7 @@ interface Lib extends Library {
 
   /**
    * @brief Close a specific window only. The window object will still exist.
-   * All clients.
+   *        All clients.
    *
    * @param window The window number
    *
@@ -60,7 +62,7 @@ interface Lib extends Library {
    * @brief Set the window size.
    *
    * @param window The window number
-   * @param width The window width
+   * @param width  The window width
    * @param height The window height
    *
    * @example webui_set_size(myWindow, 800, 600);
@@ -77,28 +79,28 @@ interface Lib extends Library {
 
   /**
    * @brief Show a WebView window using embedded HTML, or a file. If the window
-   * is already
-   * open, it will be refreshed. Note: Win32 need `WebView2Loader.dll`.
+   *        is already
+   *        open, it will be refreshed. Note: Win32 need `WebView2Loader.dll`.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param content The HTML, URL, Or a local file
    *
    * @return Returns True if showing the WebView window is successed.
    *
    * @example webui_show_wv(myWindow, "<html>...</html>"); |
-   * webui_show_wv(myWindow,
-   * "index.html"); | webui_show_wv(myWindow, "http://...");
+   *          webui_show_wv(myWindow,
+   *          "index.html"); | webui_show_wv(myWindow, "http://...");
    */
   void webui_show_wv(int window, String content);
 
   /**
    * @brief Bind an HTML element and a JavaScript object with a backend
-   * function. Empty
-   * element name means all events.
+   *        function. Empty
+   *        element name means all events.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param element The HTML element / JavaScript object
-   * @param func The callback function
+   * @param func    The callback function
    *
    * @return Returns a unique bind ID.
    *
@@ -108,21 +110,21 @@ interface Lib extends Library {
 
   /**
    * @brief Use this API after using `webui_bind()` to add any user data to it
-   * that can be
-   * read later using `webui_get_context()`.
+   *        that can be
+   *        read later using `webui_get_context()`.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param element The HTML element / JavaScript object
    * @param context Any user data
    *
    * @example
-   * webui_bind(myWindow, "myFunction", myFunction);
+   *          webui_bind(myWindow, "myFunction", myFunction);
    * 
-   * webui_set_context(myWindow, "myFunction", myData);
+   *          webui_set_context(myWindow, "myFunction", myData);
    * 
-   * void myFunction(webui_event_t* e) {
-   * void* myData = webui_get_context(e);
-   * }
+   *          void myFunction(webui_event_t* e) {
+   *          void* myData = webui_get_context(e);
+   *          }
    */
   void webui_set_context(int window, String element, Pointer context);
 
@@ -134,19 +136,19 @@ interface Lib extends Library {
    * @return Returns user data pointer.
    *
    * @example
-   * webui_bind(myWindow, "myFunction", myFunction);
+   *          webui_bind(myWindow, "myFunction", myFunction);
    * 
-   * webui_set_context(myWindow, "myFunction", myData);
+   *          webui_set_context(myWindow, "myFunction", myData);
    * 
-   * void myFunction(webui_event_t* e) {
-   * void* myData = webui_get_context(e);
-   * }
+   *          void myFunction(webui_event_t* e) {
+   *          void* myData = webui_get_context(e);
+   *          }
    */
   Pointer webui_get_context(WebuiCallbacks.WebUIEventT e);
 
   /**
    * @brief Get the recommended web browser ID to use. If you
-   * are already using one, this function will return the same ID.
+   *        are already using one, this function will return the same ID.
    * 
    * @param window The window number
    * 
@@ -158,45 +160,46 @@ interface Lib extends Library {
 
   /**
    * @brief Show a window using embedded HTML, or a file. If the window is
-   * already
-   * open, it will be refreshed. Single client.
+   *        already
+   *        open, it will be refreshed. Single client.
    *
-   * @param e The event struct
+   * @param e       The event struct
    * @param content The HTML, URL, Or a local file
    *
    * @return Returns True if showing the window is successed.
    *
    * @example webui_show_client(e, "<html>...</html>"); |
-   * webui_show_client(e, "index.html"); | webui_show_client(e, "http://...");
+   *          webui_show_client(e, "index.html"); | webui_show_client(e,
+   *          "http://...");
    */
   boolean webui_show_client(WebuiCallbacks.WebUIEventT e, String content);
 
   /**
    * @brief Same as `webui_show()`. But using a specific web browser.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param content The HTML, Or a local file
    * @param browser The web browser to be used
    *
    * @return Returns True if showing the window is successed.
    *
    * @example webui_show_browser(myWindow, "<html>...</html>", Chrome); |
-   * webui_show(myWindow, "index.html", Firefox);
+   *          webui_show(myWindow, "index.html", Firefox);
    */
   boolean webui_show_browser(int window, String content, int broswer);
 
   /**
    * @brief Same as `webui_show()`. But start only the web server and return the
-   * URL.
-   * No window will be shown.
+   *        URL.
+   *        No window will be shown.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param content The HTML, Or a local file
    *
    * @return Returns the url of this window server.
    *
    * @example const char* url = webui_start_server(myWindow,
-   * "/full/root/path");
+   *          "/full/root/path");
    */
   String webui_start_server(int window, String content);
 
@@ -217,13 +220,13 @@ interface Lib extends Library {
    * @param params Command line parameters
    *
    * @example webui_set_custom_parameters(myWindow,
-   * "--remote-debugging-port=9222");
+   *          "--remote-debugging-port=9222");
    */
   void webui_set_custom_parameters(int window, String[] params);
 
   /**
    * @brief Set the window with high-contrast support. Useful when you want to
-   * build a better high-contrast theme with CSS.
+   *        build a better high-contrast theme with CSS.
    *
    * @param window The window number
    * @param status True or False
@@ -279,7 +282,7 @@ interface Lib extends Library {
    * @brief Set the web-server root folder path for a specific window.
    *
    * @param window The window number
-   * @param path The local folder full path
+   * @param path   The local folder full path
    *
    * @example webui_set_root_folder(myWindow, "/home/Foo/Bar/");
    */
@@ -289,7 +292,7 @@ interface Lib extends Library {
 
   /**
    * @brief Set the web-server root folder path for all windows. Should be used
-   * before `webui_show()`.
+   *        before `webui_show()`.
    *
    * @param path The local folder full path
    *
@@ -299,13 +302,13 @@ interface Lib extends Library {
 
   /**
    * @brief Set a custom handler to serve files. This custom handler should
-   * return full HTTP header and body.
-   * This deactivates any previous handler set with
-   * `webui_set_file_handler_window`
+   *        return full HTTP header and body.
+   *        This deactivates any previous handler set with
+   *        `webui_set_file_handler_window`
    *
-   * @param window The window number
+   * @param window  The window number
    * @param handler The handler function: `void myHandler(const char* filename,
-   * int* length)`
+   *                int* length)`
    *
    * @example webui_set_file_handler(myWindow, myHandlerFunction);
    */
@@ -313,13 +316,14 @@ interface Lib extends Library {
 
   /**
    * @brief Set a custom handler to serve files. This custom handler should
-   * return full HTTP header and body.
-   * This deactivates any previous handler set with `webui_set_file_handler`
+   *        return full HTTP header and body.
+   *        This deactivates any previous handler set with
+   *        `webui_set_file_handler`
    *
-   * @param window The window number
+   * @param window  The window number
    * @param handler The handler function: `void myHandler(size_t window, const
-   * char* filename,
-   * int* length)`
+   *                char* filename,
+   *                int* length)`
    *
    * @example webui_set_file_handler_window(myWindow, myHandlerFunction);
    */
@@ -327,15 +331,15 @@ interface Lib extends Library {
 
   /**
    * @brief Use this API to set a file handler response if your backend need
-   * async
-   * response for `webui_set_file_handler()`.
+   *        async
+   *        response for `webui_set_file_handler()`.
    *
-   * @param window The window number
+   * @param window   The window number
    * @param response The response buffer
-   * @param length The response size
+   * @param length   The response size
    *
    * @example webui_interface_set_response_file_handler(myWindow, buffer,
-   * 1024);
+   *          1024);
    */
   void webui_interface_set_response_file_handler(int window, Pointer response, int length);
 
@@ -350,7 +354,7 @@ interface Lib extends Library {
 
   /**
    * @brief Set the maximum time in seconds to wait for the window to connect.
-   * This effect `show()` and `wait()`. Value of `0` means wait forever.
+   *        This effect `show()` and `wait()`. Value of `0` means wait forever.
    *
    * @param second The timeout in seconds
    *
@@ -361,8 +365,8 @@ interface Lib extends Library {
   /**
    * @brief Set the default embedded HTML favicon.
    *
-   * @param window The window number
-   * @param icon The icon as string: `<svg>...</svg>`
+   * @param window    The window number
+   * @param icon      The icon as string: `<svg>...</svg>`
    * @param icon_type The icon type: `image/svg+xml`
    *
    * @example webui_set_icon(myWindow, "<svg>...</svg>", "image/svg+xml");
@@ -402,7 +406,7 @@ interface Lib extends Library {
 
   /**
    * @brief Safely allocate memory using the WebUI memory management system. It
-   * can be safely freed using `webui_free()` at any time.
+   *        can be safely freed using `webui_free()` at any time.
    *
    * @param size The size of memory in bytes
    *
@@ -413,8 +417,8 @@ interface Lib extends Library {
   /**
    * @brief Copy raw data.
    *
-   * @param dest Destination memory pointer
-   * @param src Source memory pointer
+   * @param dest  Destination memory pointer
+   * @param src   Source memory pointer
    * @param count Bytes to copy
    *
    * @example webui_memcpy(myBuffer, myData, 64);
@@ -424,11 +428,11 @@ interface Lib extends Library {
   /**
    * @brief Safely send raw data to the UI. All clients.
    *
-   * @param window The window number
+   * @param window   The window number
    * @param function The JavaScript function to receive raw data: `function
-   * myFunc(myData){}`
-   * @param raw The raw data buffer
-   * @param size The raw data size in bytes
+   *                 myFunc(myData){}`
+   * @param raw      The raw data buffer
+   * @param size     The raw data size in bytes
    *
    * @example webui_send_raw(myWindow, "myJavaScriptFunc", myBuffer, 64);
    */
@@ -437,11 +441,11 @@ interface Lib extends Library {
   /**
    * @brief Safely send raw data to the UI. Single client.
    *
-   * @param e The event struct
+   * @param e        The event struct
    * @param function The JavaScript function to receive raw data: `function
-   * myFunc(myData){}`
-   * @param raw The raw data buffer
-   * @param size The raw data size in bytes
+   *                 myFunc(myData){}`
+   * @param raw      The raw data buffer
+   * @param size     The raw data size in bytes
    *
    * @example webui_send_raw_client(e, "myJavaScriptFunc", myBuffer, 64);
    */
@@ -461,7 +465,7 @@ interface Lib extends Library {
    * @brief Set the window minimum size.
    *
    * @param window The window number
-   * @param width The window width
+   * @param width  The window width
    * @param height The window height
    *
    * @example webui_set_minimum_size(myWindow, 800, 600);
@@ -472,8 +476,8 @@ interface Lib extends Library {
    * @brief Set the window position.
    *
    * @param window The window number
-   * @param x The window X
-   * @param y The window Y
+   * @param x      The window X
+   * @param y      The window Y
    *
    * @example webui_set_position(myWindow, 100, 100);
    */
@@ -481,22 +485,22 @@ interface Lib extends Library {
 
   /**
    * @brief Set the web browser profile to use. An empty `name` and `path` means
-   * the default user profile. Need to be called before `webui_show()`.
+   *        the default user profile. Need to be called before `webui_show()`.
    *
    * @param window The window number
-   * @param name The web browser profile name
-   * @param path The web browser profile full path
+   * @param name   The web browser profile name
+   * @param path   The web browser profile full path
    *
    * @example webui_set_profile(myWindow, "Bar", "/Home/Foo/Bar"); |
-   * webui_set_profile(myWindow, "", "");
+   *          webui_set_profile(myWindow, "", "");
    */
   void webui_set_profile(int window, String name, String path);
 
   /**
    * @brief Set the web browser proxy server to use. Need to be called before
-   * `webui_show()`.
+   *        `webui_show()`.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param proxy_server The web browser proxy_server
    *
    * @example webui_set_proxy(myWindow, "http://127.0.0.1:8888");
@@ -525,7 +529,7 @@ interface Lib extends Library {
 
   /**
    * @brief Allow a specific window address to be accessible from a public
-   * network.
+   *        network.
    *
    * @param window The window number
    * @param status True or False
@@ -538,7 +542,7 @@ interface Lib extends Library {
    * @brief Navigate to a specific URL. All clients.
    *
    * @param window The window number
-   * @param url Full HTTP URL
+   * @param url    Full HTTP URL
    *
    * @example webui_navigate(myWindow, "http://domain.com");
    */
@@ -547,7 +551,7 @@ interface Lib extends Library {
   /**
    * @brief Navigate to a specific URL. Single client.
    *
-   * @param e The event struct
+   * @param e   The event struct
    * @param url Full HTTP URL
    *
    * @example webui_navigate_client(e, "http://domain.com");
@@ -558,20 +562,20 @@ interface Lib extends Library {
    * @brief Free all memory resources. Should be called only at the end.
    *
    * @example
-   * webui_wait();
-   * webui_clean();
+   *          webui_wait();
+   *          webui_clean();
    */
   void webui_clean();
 
   /**
    * @brief Delete all local web-browser profiles folder. It should be called at
-   * the
-   * end.
+   *        the
+   *        end.
    *
    * @example
-   * webui_wait();
-   * webui_delete_all_profiles();
-   * webui_clean();
+   *          webui_wait();
+   *          webui_delete_all_profiles();
+   *          webui_clean();
    */
   void webui_delete_all_profiles();
 
@@ -581,18 +585,18 @@ interface Lib extends Library {
    * @param window The window number
    *
    * @example
-   * webui_wait();
-   * webui_delete_profile(myWindow);
-   * webui_clean();
+   *          webui_wait();
+   *          webui_delete_profile(myWindow);
+   *          webui_clean();
    *
    * @note This can break functionality of other windows if using the same
-   * web-browser.
+   *       web-browser.
    */
   void webui_delete_profile(int window);
 
   /**
    * @brief Get the ID of the parent process (The web browser may re-create
-   * another new process).
+   *        another new process).
    *
    * @param window The window number
    *
@@ -615,7 +619,7 @@ interface Lib extends Library {
 
   /**
    * @brief Get the network port of a running window.
-   * This can be useful to determine the HTTP link of `webui.js`
+   *        This can be useful to determine the HTTP link of `webui.js`
    *
    * @param window The window number
    * 
@@ -627,11 +631,11 @@ interface Lib extends Library {
 
   /**
    * @brief Set a custom web-server/websocket network port to be used by WebUI.
-   * This can be useful to determine the HTTP link of `webui.js` in case
-   * you are trying to use WebUI with an external web-server like NGNIX.
+   *        This can be useful to determine the HTTP link of `webui.js` in case
+   *        you are trying to use WebUI with an external web-server like NGNIX.
    *
    * @param window The window number
-   * @param port The web-server network port WebUI should use
+   * @param port   The web-server network port WebUI should use
    *
    * @return Returns True if the port is free and usable by WebUI
    *
@@ -650,7 +654,7 @@ interface Lib extends Library {
 
   /**
    * @brief Control the WebUI behaviour. It's recommended to be called at the
-   * beginning.
+   *        beginning.
    *
    * @param option The desired option from `webui_config` enum
    * @param status The status of the option, `true` or `false`
@@ -661,9 +665,11 @@ interface Lib extends Library {
 
   /**
    * @brief Control if UI events comming from this window should be processed
-   * one a time in a single blocking thread `True`, or process every event in
-   * a new non-blocking thread `False`. This update single window. You can use
-   * `webui_set_config(ui_event_blocking, ...)` to update all windows.
+   *        one a time in a single blocking thread `True`, or process every event
+   *        in
+   *        a new non-blocking thread `False`. This update single window. You can
+   *        use
+   *        `webui_set_config(ui_event_blocking, ...)` to update all windows.
    *
    * @param window The window number
    * @param status The blocking status `true` or `false`
@@ -683,8 +689,9 @@ interface Lib extends Library {
 
   /**
    * @brief Set the SSL/TLS certificate and the private key content, both in PEM
-   * format. This works only with `webui-2-secure` library. If set empty WebUI
-   * will generate a self-signed certificate.
+   *        format. This works only with `webui-2-secure` library. If set empty
+   *        WebUI
+   *        will generate a self-signed certificate.
    *
    * @param certificate_pem The SSL/TLS certificate content in PEM format
    * @param private_key_pem The private key content in PEM format
@@ -692,7 +699,7 @@ interface Lib extends Library {
    * @return Returns True if the certificate and the key are valid.
    *
    * @example bool ret = webui_set_tls_certificate("-----BEGIN
-   * CERTIFICATE-----\n...", "-----BEGIN PRIVATE KEY-----\n...");
+   *          CERTIFICATE-----\n...", "-----BEGIN PRIVATE KEY-----\n...");
    */
   boolean webui_set_tls_certificate(String certificate_pem, String private_key_pem);
 
@@ -709,7 +716,7 @@ interface Lib extends Library {
   /**
    * @brief Run JavaScript without waiting for the response. Single client.
    *
-   * @param e The event struct
+   * @param e      The event struct
    * @param script The JavaScript to be run
    *
    * @example webui_run_client(e, "alert('Hello');");
@@ -718,36 +725,36 @@ interface Lib extends Library {
 
   /**
    * @brief Run JavaScript and get the response back. Work only in single client
-   * mode.
-   * Make sure your local buffer can hold the response.
+   *        mode.
+   *        Make sure your local buffer can hold the response.
    *
-   * @param window The window number
-   * @param script The JavaScript to be run
-   * @param timeout The execution timeout in seconds
-   * @param buffer The local buffer to hold the response
+   * @param window        The window number
+   * @param script        The JavaScript to be run
+   * @param timeout       The execution timeout in seconds
+   * @param buffer        The local buffer to hold the response
    * @param buffer_length The local buffer size
    *
    * @return Returns True if there is no execution error
    *
    * @example bool err = webui_script(myWindow, "return 4 + 6;", 0, myBuffer,
-   * myBufferSize);
+   *          myBufferSize);
    */
   void webui_script(int window, String script, int timeout, String[] buffer, int buffer_length);
 
   /**
    * @brief Run JavaScript and get the response back. Single client.
-   * Make sure your local buffer can hold the response.
+   *        Make sure your local buffer can hold the response.
    *
-   * @param e The event struct
-   * @param script The JavaScript to be run
-   * @param timeout The execution timeout in seconds
-   * @param buffer The local buffer to hold the response
+   * @param e             The event struct
+   * @param script        The JavaScript to be run
+   * @param timeout       The execution timeout in seconds
+   * @param buffer        The local buffer to hold the response
    * @param buffer_length The local buffer size
    *
    * @return Returns True if there is no execution error
    *
    * @example bool err = webui_script_client(e, "return 4 + 6;", 0, myBuffer,
-   * myBufferSize);
+   *          myBufferSize);
    */
   void webui_script_client(WebuiCallbacks.WebUIEventT e, String script, int timeout, String[] buffer,
       int buffer_length);
@@ -755,7 +762,7 @@ interface Lib extends Library {
   /**
    * @brief Chose between Deno and Nodejs as runtime for .js and .ts files.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param runtime Deno | Bun | Nodejs | None
    *
    * @example webui_set_runtime(myWindow, Deno);
@@ -776,7 +783,7 @@ interface Lib extends Library {
   /**
    * @brief Get an argument as integer at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as integer
@@ -799,7 +806,7 @@ interface Lib extends Library {
   /**
    * @brief Get an argument as float at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as float
@@ -822,7 +829,7 @@ interface Lib extends Library {
   /**
    * @brief Get an argument as string at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as string
@@ -845,7 +852,7 @@ interface Lib extends Library {
   /**
    * @brief Get an argument as boolean at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as boolean
@@ -868,7 +875,7 @@ interface Lib extends Library {
   /**
    * @brief Get the size in bytes of an argument at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns size in bytes
@@ -934,12 +941,13 @@ interface Lib extends Library {
 
   /**
    * @brief Bind a specific HTML element click event with a function. Empty
-   * element means all events.
+   *        element means all events.
    *
-   * @param window The window number
+   * @param window  The window number
    * @param element The element ID
-   * @param func The callback as myFunc(Window, EventType, Element, EventNumber,
-   * BindID)
+   * @param func    The callback as myFunc(Window, EventType, Element,
+   *                EventNumber,
+   *                BindID)
    *
    * @return Returns unique bind ID
    *
@@ -949,14 +957,14 @@ interface Lib extends Library {
 
   /**
    * @brief When using `webui_interface_bind()`, you may need this function to
-   * easily set a response.
+   *        easily set a response.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param response The response as string to be send to JavaScript
+   * @param response     The response as string to be send to JavaScript
    *
    * @example webui_interface_set_response(myWindow, e->event_number,
-   * "Response...");
+   *          "Response...");
    */
   void webui_interface_set_response(int window, int event_number, String response);
 
@@ -983,93 +991,94 @@ interface Lib extends Library {
   /**
    * @brief Get an argument as string at a specific index.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param index The argument position
+   * @param index        The argument position
    *
    * @return Returns argument as string
    *
    * @example const char* myStr = webui_interface_get_string_at(myWindow,
-   * e->event_number, 0);
+   *          e->event_number, 0);
    */
   String webui_interface_get_string_at(int window, int event_number, int index);
 
   /**
    * @brief Get an argument as integer at a specific index.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param index The argument position
+   * @param index        The argument position
    *
    * @return Returns argument as integer
    *
    * @example long long int myNum = webui_interface_get_int_at(myWindow,
-   * e->event_number, 0);
+   *          e->event_number, 0);
    */
   NativeLong webui_interface_get_int_at(int window, int event_number, int index);
 
   /**
    * @brief Get an argument as float at a specific index.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param index The argument position
+   * @param index        The argument position
    *
    * @return Returns argument as float
    *
    * @example double myFloat = webui_interface_get_int_at(myWindow,
-   * e->event_number, 0);
+   *          e->event_number, 0);
    */
   double webui_interface_get_float_at(int window, int event_number, int index);
 
   /**
    * @brief Get an argument as boolean at a specific index.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param index The argument position
+   * @param index        The argument position
    *
    * @return Returns argument as boolean
    *
    * @example bool myBool = webui_interface_get_bool_at(myWindow,
-   * e->event_number, 0);
+   *          e->event_number, 0);
    */
   boolean webui_interface_get_bool_at(int window, int event_number, int index);
 
   /**
    * @brief Get the size in bytes of an argument at a specific index.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param index The argument position
+   * @param index        The argument position
    *
    * @return Returns size in bytes
    *
    * @example size_t argLen = webui_interface_get_size_at(myWindow,
-   * e->event_number, 0);
+   *          e->event_number, 0);
    */
   int webui_interface_get_size_at(int window, int event_number, int index);
 
   /**
    * @brief Show a window using embedded HTML, or a file. If the window is
-   * already
-   * open, it will be refreshed. Single client.
+   *        already
+   *        open, it will be refreshed. Single client.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param content The HTML, URL, Or a local file
+   * @param content      The HTML, URL, Or a local file
    *
    * @return Returns True if showing the window is successed.
    *
    * @example webui_show_client(e, "<html>...</html>"); |
-   * webui_show_client(e, "index.html"); | webui_show_client(e, "http://...");
+   *          webui_show_client(e, "index.html"); | webui_show_client(e,
+   *          "http://...");
    */
   boolean webui_interface_show_client(int window, int event_number, String content);
 
   /**
    * @brief Close a specific client.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
    *
    * @example webui_close_client(e);
@@ -1079,12 +1088,12 @@ interface Lib extends Library {
   /**
    * @brief Safely send raw data to the UI. Single client.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param function The JavaScript function to receive raw data: `function
-   * myFunc(myData){}`
-   * @param raw The raw data buffer
-   * @param size The raw data size in bytes
+   * @param function     The JavaScript function to receive raw data: `function
+   *                     myFunc(myData){}`
+   * @param raw          The raw data buffer
+   * @param size         The raw data size in bytes
    *
    * @example webui_send_raw_client(e, "myJavaScriptFunc", myBuffer, 64);
    */
@@ -1093,9 +1102,9 @@ interface Lib extends Library {
   /**
    * @brief Navigate to a specific URL. Single client.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param url Full HTTP URL
+   * @param url          Full HTTP URL
    *
    * @example webui_navigate_client(e, "http://domain.com");
    */
@@ -1104,9 +1113,9 @@ interface Lib extends Library {
   /**
    * @brief Run JavaScript without waiting for the response. Single client.
    *
-   * @param window The window number
+   * @param window       The window number
    * @param event_number The event number
-   * @param script The JavaScript to be run
+   * @param script       The JavaScript to be run
    *
    * @example webui_run_client(e, "alert('Hello');");
    */
@@ -1114,19 +1123,19 @@ interface Lib extends Library {
 
   /**
    * @brief Run JavaScript and get the response back. Single client.
-   * Make sure your local buffer can hold the response.
+   *        Make sure your local buffer can hold the response.
    *
-   * @param window The window number
-   * @param event_number The event number
-   * @param script The JavaScript to be run
-   * @param timeout The execution timeout in seconds
-   * @param buffer The local buffer to hold the response
+   * @param window        The window number
+   * @param event_number  The event number
+   * @param script        The JavaScript to be run
+   * @param timeout       The execution timeout in seconds
+   * @param buffer        The local buffer to hold the response
    * @param buffer_length The local buffer size
    *
    * @return Returns True if there is no execution error
    *
    * @example bool err = webui_script_client(e, "return 4 + 6;", 0, myBuffer,
-   * myBufferSize);
+   *          myBufferSize);
    */
   boolean webui_interface_script_client(int window, int event_number, String script, int timeour, String[] buffer,
       int buffer_length);

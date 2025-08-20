@@ -521,10 +521,10 @@ public class Webui {
   /**
    * @brief Wait until all opened windows get closed.
    *
-   * @example Webui.wait_();
+   * @example Webui.waitForWindowClose();
    */
-  public static void wait_() {
-    Lib.INSTANCE.webui_wait();
+  public void waitForWindowClose() {
+    lib.webui_wait();
   }
 
   /**
