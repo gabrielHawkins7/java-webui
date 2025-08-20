@@ -10,7 +10,7 @@ public class WebuiCallbacks {
    */
   @Structure.FieldOrder({ "window", "event_type", "element", "event_number", "bind_id", "client_id", "connection_id",
       "cookies" })
-  class WebUIEventT extends Structure {
+  public static class WebUIEventT extends Structure {
     public int window; // The window object number
     public int event_type; // Event type
     public Pointer element; // HTML element ID
@@ -20,6 +20,14 @@ public class WebuiCallbacks {
     public int connection_id; // Client's connection ID
     public Pointer cookies; // Client's full cookies
 
+    public WebUIEventT() {
+      super();
+    }
+
+    public WebUIEventT(Pointer p) {
+      super(p);
+    }
+
   }
 
   // -- Callbacks --------------------------------------------------------------
@@ -27,7 +35,7 @@ public class WebuiCallbacks {
   /**
    * Callback interface for events bound using `webui_bind`.
    */
-  interface EventCallback extends Callback {
+  public interface EventCallback extends Callback {
     void invoke(WebUIEventT e);
   }
 
