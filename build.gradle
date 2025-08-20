@@ -12,6 +12,8 @@ repositories {
 dependencies {
   implementation 'net.java.dev.jna:jna:5.17.0'
   implementation 'net.java.dev.jna:jna-platform:5.17.0'
+  implementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+  implementation 'org.junit.platform:junit-platform-launcher'
 }
 application {
   mainClass = 'Main'
@@ -26,7 +28,17 @@ sourceSets {
       srcDirs = ['src/resources']
     }
   }
+  test {
+    java {
+        srcDirs = ['src/test']
+    }
+}
 }
 
-
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
 
