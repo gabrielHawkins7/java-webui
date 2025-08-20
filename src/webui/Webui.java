@@ -4,7 +4,7 @@ import com.sun.jna.platform.EnumUtils;
 
 public class Webui {
 
-  private Lib lib = Lib.INSTANCE;
+  private static Lib lib = Lib.INSTANCE;
   private int window;
 
   /**
@@ -16,15 +16,16 @@ public class Webui {
     this.window = lib.webui_new_window();
   }
 
-  // -- C API Wrapper -------------------------------------------------------------
+  // -- C API Wrapper
+  // -------------------------------------------------------------
 
   /**
    * @brief Bind an HTML element and a JavaScript object with a backend function.
-   * Empty
-   * element name means all events.
+   *        Empty
+   *        element name means all events.
    *
    * @param element The HTML element / JavaScript object
-   * @param func The callback function
+   * @param func    The callback function
    *
    * @example myWindow.bind("myFunction", myFunction);
    */
@@ -34,16 +35,17 @@ public class Webui {
 
   /**
    * @brief Show a window using embedded HTML, or a file. If the window is
-   * already
-   * open, it will be refreshed. This will refresh all windows in multi-client
-   * mode.
+   *        already
+   *        open, it will be refreshed. This will refresh all windows in
+   *        multi-client
+   *        mode.
    *
    * @param html The HTML, URL, Or a local file
    *
    * @return Returns True if showing the window is successed.
    *
    * @example myWindow.show("<html>...</html>"); |
-   * myWindow.show("index.html"); | myWindow.show("http://...");
+   *          myWindow.show("index.html"); | myWindow.show("http://...");
    */
   boolean show(String html) {
     return lib.webui_show(window, html);
@@ -52,14 +54,15 @@ public class Webui {
   /**
    * @brief Same as `show()`. But using a specific web browser.
    *
-   * @param html The HTML, Or a local file
+   * @param html    The HTML, Or a local file
    * @param browser The web browser to be used
    *
    * @return Returns True if showing the window is successed.
    *
-   * @example myWindow.show_browser("<html>...</html>", WebuiConst.browser.Chrome);
-   * |
-   * myWindow.show("index.html", WebuiConst.browser.Firefox);
+   * @example myWindow.show_browser("<html>...</html>",
+   *          WebuiConst.browser.Chrome);
+   *          |
+   *          myWindow.show("index.html", WebuiConst.browser.Firefox);
    */
   boolean show_browser(String html, WebuiConst.browser browser) {
     return lib.webui_show_browser(window, html, EnumUtils.toInteger(browser));
@@ -86,7 +89,7 @@ public class Webui {
 
   /**
    * @brief Close a specific window only. The window object will still exist.
-   * All clients.
+   *        All clients.
    *
    * @example myWindow.close();
    */
@@ -106,7 +109,7 @@ public class Webui {
   /**
    * @brief Set the window size.
    *
-   * @param width The window width
+   * @param width  The window width
    * @param height The window height
    *
    * @example myWindow.set_size(800, 600);
@@ -145,15 +148,15 @@ public class Webui {
 
   /**
    * @brief Show a WebView window using embedded HTML, or a file. If the window
-   * is already
-   * open, it will be refreshed. Note: Win32 need `WebView2Loader.dll`.
+   *        is already
+   *        open, it will be refreshed. Note: Win32 need `WebView2Loader.dll`.
    *
    * @param content The HTML, URL, Or a local file
    *
    * @return Returns True if showing the WebView window is successed.
    *
    * @example myWindow.show_wv("<html>...</html>"); | myWindow.show_wv(
-   * "index.html"); | myWindow.show_wv("http://...");
+   *          "index.html"); | myWindow.show_wv("http://...");
    */
   void show_wv(String content) {
     lib.webui_show_wv(window, content);
@@ -161,20 +164,20 @@ public class Webui {
 
   /**
    * @brief Use this API after using `bind()` to add any user data to it
-   * that can be
-   * read later using `get_context()`.
+   *        that can be
+   *        read later using `get_context()`.
    *
    * @param element The HTML element / JavaScript object
    * @param context Any user data
    *
    * @example
-   * myWindow.bind("myFunction", myFunction);
+   *          myWindow.bind("myFunction", myFunction);
    * 
-   * myWindow.set_context("myFunction", myData);
+   *          myWindow.set_context("myFunction", myData);
    * 
-   * void myFunction(webui_event_t* e) {
-   * void* myData = webui.get_context(e);
-   * }
+   *          void myFunction(webui_event_t* e) {
+   *          void* myData = webui.get_context(e);
+   *          }
    */
   void set_context(String element, Pointer context) {
     lib.webui_set_context(window, element, context);
@@ -182,7 +185,7 @@ public class Webui {
 
   /**
    * @brief Get the recommended web browser ID to use. If you
-   * are already using one, this function will return the same ID.
+   *        are already using one, this function will return the same ID.
    * 
    * @return Returns a web browser ID.
    * 
@@ -194,8 +197,8 @@ public class Webui {
 
   /**
    * @brief Same as `show()`. But start only the web server and return the
-   * URL.
-   * No window will be shown.
+   *        URL.
+   *        No window will be shown.
    *
    * @param content The HTML, Or a local file
    *
@@ -213,7 +216,7 @@ public class Webui {
    * @param params Command line parameters
    *
    * @example myWindow.set_custom_parameters(new String[]
-   * {"--remote-debugging-port=9222"});
+   *          {"--remote-debugging-port=9222"});
    */
   void set_custom_parameters(String[] params) {
     lib.webui_set_custom_parameters(window, params);
@@ -221,7 +224,7 @@ public class Webui {
 
   /**
    * @brief Set the window with high-contrast support. Useful when you want to
-   * build a better high-contrast theme with CSS.
+   *        build a better high-contrast theme with CSS.
    *
    * @param status True or False
    *
@@ -244,12 +247,12 @@ public class Webui {
 
   /**
    * @brief Set a custom handler to serve files. This custom handler should
-   * return full HTTP header and body.
-   * This deactivates any previous handler set with
-   * `set_file_handler_window`
+   *        return full HTTP header and body.
+   *        This deactivates any previous handler set with
+   *        `set_file_handler_window`
    *
    * @param handler The handler function: `void myHandler(const char* filename,
-   * int* length)`
+   *                int* length)`
    *
    * @example myWindow.set_file_handler(myHandlerFunction);
    */
@@ -259,12 +262,12 @@ public class Webui {
 
   /**
    * @brief Set a custom handler to serve files. This custom handler should
-   * return full HTTP header and body.
-   * This deactivates any previous handler set with `set_file_handler`
+   *        return full HTTP header and body.
+   *        This deactivates any previous handler set with `set_file_handler`
    *
    * @param handler The handler function: `void myHandler(size_t window, const
-   * char* filename,
-   * int* length)`
+   *                char* filename,
+   *                int* length)`
    *
    * @example myWindow.set_file_handler_window(myHandlerFunction);
    */
@@ -284,7 +287,7 @@ public class Webui {
   /**
    * @brief Set the default embedded HTML favicon.
    *
-   * @param icon The icon as string: `<svg>...</svg>`
+   * @param icon      The icon as string: `<svg>...</svg>`
    * @param icon_type The icon type: `image/svg+xml`
    *
    * @example myWindow.set_icon("<svg>...</svg>", "image/svg+xml");
@@ -297,9 +300,9 @@ public class Webui {
    * @brief Safely send raw data to the UI. All clients.
    *
    * @param function The JavaScript function to receive raw data: `function
-   * myFunc(myData){}`
-   * @param raw The raw data buffer
-   * @param size The raw data size in bytes
+   *                 myFunc(myData){}`
+   * @param raw      The raw data buffer
+   * @param size     The raw data size in bytes
    *
    * @example myWindow.send_raw("myJavaScriptFunc", myBuffer, 64);
    */
@@ -321,7 +324,7 @@ public class Webui {
   /**
    * @brief Set the window minimum size.
    *
-   * @param width The window width
+   * @param width  The window width
    * @param height The window height
    *
    * @example myWindow.set_minimum_size(800, 600);
@@ -332,13 +335,13 @@ public class Webui {
 
   /**
    * @brief Set the web browser profile to use. An empty `name` and `path` means
-   * the default user profile. Need to be called before `show()`.
+   *        the default user profile. Need to be called before `show()`.
    *
    * @param name The web browser profile name
    * @param path The web browser profile full path
    *
    * @example myWindow.set_profile("Bar", "/Home/Foo/Bar"); |
-   * myWindow.set_profile("", "");
+   *          myWindow.set_profile("", "");
    */
   void set_profile(String name, String path) {
     lib.webui_set_profile(window, name, path);
@@ -346,7 +349,7 @@ public class Webui {
 
   /**
    * @brief Set the web browser proxy server to use. Need to be called before
-   * `show()`.
+   *        `show()`.
    *
    * @param proxy_server The web browser proxy_server
    *
@@ -369,7 +372,7 @@ public class Webui {
 
   /**
    * @brief Allow a specific window address to be accessible from a public
-   * network.
+   *        network.
    *
    * @param status True or False
    *
@@ -394,12 +397,12 @@ public class Webui {
    * @brief Delete a specific window web-browser local folder profile.
    *
    * @example
-   * Webui.wait_();
-   * myWindow.delete_profile();
-   * Webui.clean();
+   *          Webui.wait_();
+   *          myWindow.delete_profile();
+   *          Webui.clean();
    *
    * @note This can break functionality of other windows if using the same
-   * web-browser.
+   *       web-browser.
    */
   void delete_profile() {
     lib.webui_delete_profile(window);
@@ -407,7 +410,7 @@ public class Webui {
 
   /**
    * @brief Get the ID of the parent process (The web browser may re-create
-   * another new process).
+   *        another new process).
    *
    * @return Returns the the parent process id as integer
    *
@@ -430,7 +433,7 @@ public class Webui {
 
   /**
    * @brief Get the network port of a running window.
-   * This can be useful to determine the HTTP link of `webui.js`
+   *        This can be useful to determine the HTTP link of `webui.js`
    *
    * @return Returns the network port of the window
    *
@@ -442,8 +445,8 @@ public class Webui {
 
   /**
    * @brief Set a custom web-server/websocket network port to be used by WebUI.
-   * This can be useful to determine the HTTP link of `webui.js` in case
-   * you are trying to use WebUI with an external web-server like NGNIX.
+   *        This can be useful to determine the HTTP link of `webui.js` in case
+   *        you are trying to use WebUI with an external web-server like NGNIX.
    *
    * @param port The web-server network port WebUI should use
    *
@@ -457,9 +460,11 @@ public class Webui {
 
   /**
    * @brief Control if UI events comming from this window should be processed
-   * one a time in a single blocking thread `True`, or process every event in
-   * a new non-blocking thread `False`. This update single window. You can use
-   * `Webui.set_config(ui_event_blocking, ...)` to update all windows.
+   *        one a time in a single blocking thread `True`, or process every event
+   *        in
+   *        a new non-blocking thread `False`. This update single window. You can
+   *        use
+   *        `Webui.set_config(ui_event_blocking, ...)` to update all windows.
    *
    * @param status The blocking status `true` or `false`
    *
@@ -482,18 +487,18 @@ public class Webui {
 
   /**
    * @brief Run JavaScript and get the response back. Work only in single client
-   * mode.
-   * Make sure your local buffer can hold the response.
+   *        mode.
+   *        Make sure your local buffer can hold the response.
    *
-   * @param script The JavaScript to be run
-   * @param timeout The execution timeout in seconds
-   * @param buffer The local buffer to hold the response
+   * @param script        The JavaScript to be run
+   * @param timeout       The execution timeout in seconds
+   * @param buffer        The local buffer to hold the response
    * @param buffer_length The local buffer size
    *
    * @return Returns True if there is no execution error
    *
    * @example boolean err = myWindow.script("return 4 + 6;", 0, myBuffer,
-   * myBufferSize);
+   *          myBufferSize);
    */
   void script(String script, int timeout, String[] buffer, int buffer_length) {
     lib.webui_script(window, script, timeout, buffer, buffer_length);
@@ -510,7 +515,8 @@ public class Webui {
     lib.webui_set_runtime(window, EnumUtils.toInteger(runtime));
   }
 
-  // -- Static methods ------------------------------------------------------------
+  // -- Static methods
+  // ------------------------------------------------------------
 
   /**
    * @brief Wait until all opened windows get closed.
@@ -529,13 +535,13 @@ public class Webui {
    * @return Returns user data pointer.
    *
    * @example
-   * myWindow.bind("myFunction", myFunction);
+   *          myWindow.bind("myFunction", myFunction);
    * 
-   * myWindow.set_context("myFunction", myData);
+   *          myWindow.set_context("myFunction", myData);
    * 
-   * void myFunction(webui_event_t* e) {
-   * void* myData = Webui.get_context(e);
-   * }
+   *          void myFunction(webui_event_t* e) {
+   *          void* myData = Webui.get_context(e);
+   *          }
    */
   public static Pointer get_context(WebuiCallbacks.WebUIEventT e) {
     return Lib.INSTANCE.webui_get_context(e);
@@ -543,16 +549,17 @@ public class Webui {
 
   /**
    * @brief Show a window using embedded HTML, or a file. If the window is
-   * already
-   * open, it will be refreshed. Single client.
+   *        already
+   *        open, it will be refreshed. Single client.
    *
-   * @param e The event struct
+   * @param e       The event struct
    * @param content The HTML, URL, Or a local file
    *
    * @return Returns True if showing the window is successed.
    *
    * @example Webui.show_client(e, "<html>...</html>"); |
-   * Webui.show_client(e, "index.html"); | Webui.show_client(e, "http://...");
+   *          Webui.show_client(e, "index.html"); | Webui.show_client(e,
+   *          "http://...");
    */
   public static boolean show_client(WebuiCallbacks.WebUIEventT e, String content) {
     return Lib.INSTANCE.webui_show_client(e, content);
@@ -606,7 +613,7 @@ public class Webui {
 
   /**
    * @brief Set the web-server root folder path for all windows. Should be used
-   * before `show()`.
+   *        before `show()`.
    *
    * @param path The local folder full path
    *
@@ -618,7 +625,7 @@ public class Webui {
 
   /**
    * @brief Set the maximum time in seconds to wait for the window to connect.
-   * This effect `show()` and `wait()`. Value of `0` means wait forever.
+   *        This effect `show()` and `wait()`. Value of `0` means wait forever.
    *
    * @param second The timeout in seconds
    *
@@ -667,7 +674,7 @@ public class Webui {
 
   /**
    * @brief Safely allocate memory using the WebUI memory management system. It
-   * can be safely freed using `free()` at any time.
+   *        can be safely freed using `free()` at any time.
    *
    * @param size The size of memory in bytes
    *
@@ -680,8 +687,8 @@ public class Webui {
   /**
    * @brief Copy raw data.
    *
-   * @param dest Destination memory pointer
-   * @param src Source memory pointer
+   * @param dest  Destination memory pointer
+   * @param src   Source memory pointer
    * @param count Bytes to copy
    *
    * @example Webui.memcpy(myBuffer, myData, 64);
@@ -693,11 +700,11 @@ public class Webui {
   /**
    * @brief Safely send raw data to the UI. Single client.
    *
-   * @param e The event struct
+   * @param e        The event struct
    * @param function The JavaScript function to receive raw data: `function
-   * myFunc(myData){}`
-   * @param raw The raw data buffer
-   * @param size The raw data size in bytes
+   *                 myFunc(myData){}`
+   * @param raw      The raw data buffer
+   * @param size     The raw data size in bytes
    *
    * @example Webui.send_raw_client(e, "myJavaScriptFunc", myBuffer, 64);
    */
@@ -719,7 +726,7 @@ public class Webui {
   /**
    * @brief Navigate to a specific URL. Single client.
    *
-   * @param e The event struct
+   * @param e   The event struct
    * @param url Full HTTP URL
    *
    * @example Webui.navigate_client(e, "http://domain.com");
@@ -732,8 +739,8 @@ public class Webui {
    * @brief Free all memory resources. Should be called only at the end.
    *
    * @example
-   * Webui.wait_();
-   * Webui.clean();
+   *          Webui.wait_();
+   *          Webui.clean();
    */
   public static void clean() {
     Lib.INSTANCE.webui_clean();
@@ -741,13 +748,13 @@ public class Webui {
 
   /**
    * @brief Delete all local web-browser profiles folder. It should be called at
-   * the
-   * end.
+   *        the
+   *        end.
    *
    * @example
-   * Webui.wait_();
-   * Webui.delete_all_profiles();
-   * Webui.clean();
+   *          Webui.wait_();
+   *          Webui.delete_all_profiles();
+   *          Webui.clean();
    */
   public static void delete_all_profiles() {
     Lib.INSTANCE.webui_delete_all_profiles();
@@ -766,7 +773,7 @@ public class Webui {
 
   /**
    * @brief Control the WebUI behaviour. It's recommended to be called at the
-   * beginning.
+   *        beginning.
    *
    * @param option The desired option from `webui_config` enum
    * @param status The status of the option, `true` or `false`
@@ -790,8 +797,9 @@ public class Webui {
 
   /**
    * @brief Set the SSL/TLS certificate and the private key content, both in PEM
-   * format. This works only with `webui-2-secure` library. If set empty WebUI
-   * will generate a self-signed certificate.
+   *        format. This works only with `webui-2-secure` library. If set empty
+   *        WebUI
+   *        will generate a self-signed certificate.
    *
    * @param certificate_pem The SSL/TLS certificate content in PEM format
    * @param private_key_pem The private key content in PEM format
@@ -799,7 +807,7 @@ public class Webui {
    * @return Returns True if the certificate and the key are valid.
    *
    * @example boolean ret = Webui.set_tls_certificate("-----BEGIN
-   * CERTIFICATE-----\n...", "-----BEGIN PRIVATE KEY-----\n...");
+   *          CERTIFICATE-----\n...", "-----BEGIN PRIVATE KEY-----\n...");
    */
   public static boolean set_tls_certificate(String certificate_pem, String private_key_pem) {
     return Lib.INSTANCE.webui_set_tls_certificate(certificate_pem, private_key_pem);
@@ -808,7 +816,7 @@ public class Webui {
   /**
    * @brief Run JavaScript without waiting for the response. Single client.
    *
-   * @param e The event struct
+   * @param e      The event struct
    * @param script The JavaScript to be run
    *
    * @example Webui.run_client(e, "alert('Hello');");
@@ -819,18 +827,18 @@ public class Webui {
 
   /**
    * @brief Run JavaScript and get the response back. Single client.
-   * Make sure your local buffer can hold the response.
+   *        Make sure your local buffer can hold the response.
    *
-   * @param e The event struct
-   * @param script The JavaScript to be run
-   * @param timeout The execution timeout in seconds
-   * @param buffer The local buffer to hold the response
+   * @param e             The event struct
+   * @param script        The JavaScript to be run
+   * @param timeout       The execution timeout in seconds
+   * @param buffer        The local buffer to hold the response
    * @param buffer_length The local buffer size
    *
    * @return Returns True if there is no execution error
    *
    * @example boolean err = Webui.script_client(e, "return 4 + 6;", 0,
-   * myBuffer, myBufferSize);
+   *          myBuffer, myBufferSize);
    */
   public static void script_client(WebuiCallbacks.WebUIEventT e, String script, int timeout, String[] buffer,
       int buffer_length) {
@@ -853,7 +861,7 @@ public class Webui {
   /**
    * @brief Get an argument as integer at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as integer
@@ -880,7 +888,7 @@ public class Webui {
   /**
    * @brief Get an argument as float at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as float
@@ -907,7 +915,7 @@ public class Webui {
   /**
    * @brief Get an argument as string at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as string
@@ -934,7 +942,7 @@ public class Webui {
   /**
    * @brief Get an argument as boolean at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns argument as boolean
@@ -961,7 +969,7 @@ public class Webui {
   /**
    * @brief Get the size in bytes of an argument at a specific index.
    *
-   * @param e The event struct
+   * @param e     The event struct
    * @param index The argument position starting from 0
    *
    * @return Returns size in bytes
