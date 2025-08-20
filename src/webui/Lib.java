@@ -133,7 +133,7 @@ interface Lib extends Library {
 
   int webui_get_free_port();
 
-  void webui_set_config(WebuiConst.config option, boolean status);
+  void webui_set_config(int option, boolean status);
 
   void webui_set_event_blocking(int window, boolean status);
 
@@ -151,7 +151,7 @@ interface Lib extends Library {
   void webui_script_client(WebuiCallbacks.WebUIEventT e, String script, int timeout, String[] buffer,
       int buffer_length);
 
-  void webui_set_runtime(int window, WebuiConst.runtime runtime);
+  void webui_set_runtime(int window, int runtime);
 
   int webui_get_count(WebuiCallbacks.WebUIEventT e);
 
