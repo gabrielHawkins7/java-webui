@@ -26,7 +26,6 @@ interface Lib extends Library {
     Yandex, // 11. The Yandex Browser
     ChromiumBased, // 12. Any Chromium based browser
     Webview// 13. WebView (Non-web-browser)
-
   };
 
   enum webui_runtime {
