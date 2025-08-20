@@ -1,7 +1,7 @@
 public class WebuiConst {
 
   // -- Enums ---------------------------
-  enum webui_browser {
+  enum browser {
     NoBrowser, // 0. No web browser
     AnyBrowser, // 1. Default recommended web browser
     Chrome, // 2. Google Chrome
@@ -18,14 +18,14 @@ public class WebuiConst {
     Webview// 13. WebView (Non-web-browser)
   };
 
-  enum webui_runtime {
+  enum runtime {
     None, // 0. Prevent WebUI from using any runtime for .js and .ts files
     Deno, // 1. Use Deno runtime for .js and .ts files
     NodeJS, // 2. Use Nodejs runtime for .js files
     Bun, // 3. Use Bun runtime for .js and .ts files
   };
 
-  enum webui_event {
+  enum event {
     WEBUI_EVENT_DISCONNECTED, // 0. Window disconnection event
     WEBUI_EVENT_CONNECTED, // 1. Window connection event
     WEBUI_EVENT_MOUSE_CLICK, // 2. Mouse click event
@@ -33,7 +33,7 @@ public class WebuiConst {
     WEBUI_EVENT_CALLBACK, // 4. Function call event
   };
 
-  enum webui_config {
+  enum config {
     // Control if `webui_show()`, `webui_show_browser()` and
     // `webui_show_wv()` should wait for the window to connect
     // before returns or not.

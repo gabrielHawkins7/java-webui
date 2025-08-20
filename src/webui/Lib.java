@@ -35,15 +35,15 @@ interface Lib extends Library {
 
   void webui_show_wv(int window, String content);
 
-  int webui_bind(int window, String element, EventCallback func);
+  int webui_bind(int window, String element, WebuiCallbacks.EventCallback func);
 
   void webui_set_context(int window, String element, Pointer context);
 
-  Pointer webui_get_context(WebUIEventT e);
+  Pointer webui_get_context(WebuiCallbacks.WebUIEventT e);
 
   int webui_get_best_browser(int window);
 
-  boolean webui_show_client(WebUIEventT e, String content);
+  boolean webui_show_client(WebuiCallbacks.WebUIEventT e, String content);
 
   boolean webui_show_browser(int window, String content, int broswer);
 
@@ -59,7 +59,7 @@ interface Lib extends Library {
 
   boolean webui_browser_exist(int browser);
 
-  void webui_close_client(WebUIEventT e);
+  void webui_close_client(WebuiCallbacks.WebUIEventT e);
 
   void webui_destroy(int window);
 
@@ -71,9 +71,9 @@ interface Lib extends Library {
 
   boolean webui_set_default_root_folder(String path);
 
-  void webui_set_file_handler(int window, FileHandler handler);
+  void webui_set_file_handler(int window, WebuiCallbacks.FileHandler handler);
 
-  void webui_set_file_handler_window(int window, FileWindowHandler handler);
+  void webui_set_file_handler_window(int window, WebuiCallbacks.FileWindowHandler handler);
 
   void webui_interface_set_response_file_handler(int window, Pointer response, int length);
 
@@ -95,7 +95,7 @@ interface Lib extends Library {
 
   void webui_send_raw(int window, String function, Pointer raw, int size);
 
-  void webui_send_raw_client(WebUIEventT e, String function, Pointer raw, int size);
+  void webui_send_raw_client(WebuiCallbacks.WebUIEventT e, String function, Pointer raw, int size);
 
   void webui_set_hide(int window, boolean status);
 
@@ -115,7 +115,7 @@ interface Lib extends Library {
 
   void webui_navigate(int window, String url);
 
-  void webui_navigate_client(WebUIEventT e, String url);
+  void webui_navigate_client(WebuiCallbacks.WebUIEventT e, String url);
 
   void webui_clean();
 
@@ -133,7 +133,7 @@ interface Lib extends Library {
 
   int webui_get_free_port();
 
-  void webui_set_config(webui_config option, boolean status);
+  void webui_set_config(WebuiConst.config option, boolean status);
 
   void webui_set_event_blocking(int window, boolean status);
 
@@ -143,51 +143,52 @@ interface Lib extends Library {
 
   void webui_run(int window, String script);
 
-  void webui_run_client(WebUIEventT e, String script);
+  void webui_run_client(WebuiCallbacks.WebUIEventT e, String script);
 
   // TODO: Not working? buffer issue
   void webui_script(int window, String script, int timeout, String[] buffer, int buffer_length);
 
-  void webui_script_client(WebUIEventT e, String script, int timeout, String[] buffer, int buffer_length);
+  void webui_script_client(WebuiCallbacks.WebUIEventT e, String script, int timeout, String[] buffer,
+      int buffer_length);
 
-  void webui_set_runtime(int window, webui_runtime runtime);
+  void webui_set_runtime(int window, WebuiConst.runtime runtime);
 
-  int webui_get_count(WebUIEventT e);
+  int webui_get_count(WebuiCallbacks.WebUIEventT e);
 
-  NativeLong webui_get_int_at(WebUIEventT e, int index);
+  NativeLong webui_get_int_at(WebuiCallbacks.WebUIEventT e, int index);
 
-  NativeLong webui_get_int(WebUIEventT e);
+  NativeLong webui_get_int(WebuiCallbacks.WebUIEventT e);
 
-  double webui_get_float_at(WebUIEventT e, int index);
+  double webui_get_float_at(WebuiCallbacks.WebUIEventT e, int index);
 
-  double webui_get_float(WebUIEventT e);
+  double webui_get_float(WebuiCallbacks.WebUIEventT e);
 
-  String webui_get_string_at(WebUIEventT e, int index);
+  String webui_get_string_at(WebuiCallbacks.WebUIEventT e, int index);
 
-  String webui_get_string(WebUIEventT e);
+  String webui_get_string(WebuiCallbacks.WebUIEventT e);
 
-  boolean webui_get_bool_at(WebUIEventT e, int index);
+  boolean webui_get_bool_at(WebuiCallbacks.WebUIEventT e, int index);
 
-  boolean webui_get_bool(WebUIEventT e);
+  boolean webui_get_bool(WebuiCallbacks.WebUIEventT e);
 
-  int webui_get_size_at(WebUIEventT e, int index);
+  int webui_get_size_at(WebuiCallbacks.WebUIEventT e, int index);
 
-  int webui_get_size(WebUIEventT e);
+  int webui_get_size(WebuiCallbacks.WebUIEventT e);
 
-  void webui_return_int(WebUIEventT e, NativeLong n);
+  void webui_return_int(WebuiCallbacks.WebUIEventT e, NativeLong n);
 
-  void webui_return_float(WebUIEventT e, double f);
+  void webui_return_float(WebuiCallbacks.WebUIEventT e, double f);
 
-  void webui_return_string(WebUIEventT e, String s);
+  void webui_return_string(WebuiCallbacks.WebUIEventT e, String s);
 
-  void webui_return_bool(WebUIEventT e, boolean b);
+  void webui_return_bool(WebuiCallbacks.WebUIEventT e, boolean b);
 
   int webui_get_last_error_number();
 
   String webui_get_last_error_message();
 
   // Wrappers Interface
-  int webui_interface_bind(int window, String element, InterfaceCallback func);
+  int webui_interface_bind(int window, String element, WebuiCallbacks.InterfaceCallback func);
 
   void webui_interface_set_response(int window, int event_number, String response);
 
