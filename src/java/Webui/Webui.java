@@ -1,6 +1,10 @@
+package Webui;
+
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.EnumUtils;
+
+import Native.Lib;
 
 public class Webui {
 
@@ -29,7 +33,7 @@ public class Webui {
    *
    * @example myWindow.bind("myFunction", myFunction);
    */
-  void bind(String element, WebuiCallbacks.EventCallback func) {
+  public void bind(String element, WebuiCallbacks.EventCallback func) {
     lib.webui_bind(window, element, func);
   }
 
@@ -47,7 +51,7 @@ public class Webui {
    * @example myWindow.show("<html>...</html>"); |
    *          myWindow.show("index.html"); | myWindow.show("http://...");
    */
-  boolean show(String html) {
+  public boolean show(String html) {
     return lib.webui_show(window, html);
   }
 
@@ -64,8 +68,12 @@ public class Webui {
    *          |
    *          myWindow.show("index.html", WebuiConst.browser.Firefox);
    */
-  boolean show_browser(String html, WebuiConst.browser browser) {
+  public boolean show_browser(String html, WebuiConst.browser browser) {
     return lib.webui_show_browser(window, html, EnumUtils.toInteger(browser));
+  }
+
+  public boolean show_browser(String html, int browser) {
+    return lib.webui_show_browser(window, html, browser);
   }
 
   /**
@@ -75,15 +83,15 @@ public class Webui {
    *
    * @example myWindow.set_kiosk(true);
    */
-  void set_kiosk(boolean status) {
+  public void set_kiosk(boolean status) {
     lib.webui_set_kiosk(window, status);
   }
 
-  void minimize() {
+  public void minimize() {
     lib.webui_minimize(window);
   }
 
-  void maximize() {
+  public void maximize() {
     lib.webui_maximize(window);
   }
 
@@ -93,7 +101,7 @@ public class Webui {
    *
    * @example myWindow.close();
    */
-  void close() {
+  public void close() {
     lib.webui_close(window);
   }
 
@@ -102,7 +110,7 @@ public class Webui {
    *
    * @example myWindow.destroy();
    */
-  void destroy() {
+  public void destroy() {
     lib.webui_destroy(window);
   }
 
@@ -114,7 +122,7 @@ public class Webui {
    *
    * @example myWindow.set_size(800, 600);
    */
-  void set_size(int width, int height) {
+  public void set_size(int width, int height) {
     lib.webui_set_size(window, width, height);
   }
 
@@ -126,23 +134,23 @@ public class Webui {
    *
    * @example myWindow.set_position(100, 100);
    */
-  void set_position(int x, int y) {
+  public void set_position(int x, int y) {
     lib.webui_set_position(window, x, y);
   }
 
-  void set_frameless(boolean status) {
+  public void set_frameless(boolean status) {
     lib.webui_set_frameless(window, status);
   }
 
-  void set_transparent(boolean status) {
+  public void set_transparent(boolean status) {
     lib.webui_set_transparent(window, status);
   }
 
-  void set_resizable(boolean status) {
+  public void set_resizable(boolean status) {
     lib.webui_set_resizable(window, status);
   }
 
-  void set_center() {
+  public void set_center() {
     lib.webui_set_center(window);
   }
 
@@ -158,7 +166,7 @@ public class Webui {
    * @example myWindow.show_wv("<html>...</html>"); | myWindow.show_wv(
    *          "index.html"); | myWindow.show_wv("http://...");
    */
-  void show_wv(String content) {
+  public void show_wv(String content) {
     lib.webui_show_wv(window, content);
   }
 
@@ -175,11 +183,11 @@ public class Webui {
    * 
    *          myWindow.set_context("myFunction", myData);
    * 
-   *          void myFunction(webui_event_t* e) {
-   *          void* myData = webui.get_context(e);
+   *          public void myFunction(webui_event_t* e) {
+   *          public void* myData = webui.get_context(e);
    *          }
    */
-  void set_context(String element, Pointer context) {
+  public void set_context(String element, Pointer context) {
     lib.webui_set_context(window, element, context);
   }
 
@@ -218,7 +226,7 @@ public class Webui {
    * @example myWindow.set_custom_parameters(new String[]
    *          {"--remote-debugging-port=9222"});
    */
-  void set_custom_parameters(String[] params) {
+  public void set_custom_parameters(String[] params) {
     lib.webui_set_custom_parameters(window, params);
   }
 
@@ -230,7 +238,7 @@ public class Webui {
    *
    * @example myWindow.set_high_contrast(true);
    */
-  void set_high_contrast(boolean status) {
+  public void set_high_contrast(boolean status) {
     lib.webui_set_high_contrast(window, status);
   }
 
@@ -241,7 +249,7 @@ public class Webui {
    *
    * @example myWindow.set_root_folder("/home/Foo/Bar/");
    */
-  boolean set_root_folder(String path) {
+  public boolean set_root_folder(String path) {
     return lib.webui_set_root_folder(window, path);
   }
 
@@ -251,12 +259,13 @@ public class Webui {
    *        This deactivates any previous handler set with
    *        `set_file_handler_window`
    *
-   * @param handler The handler function: `void myHandler(const char* filename,
+   * @param handler The handler function: `public void myHandler(const char*
+   *                filename,
    *                int* length)`
    *
    * @example myWindow.set_file_handler(myHandlerFunction);
    */
-  void set_file_handler(WebuiCallbacks.FileHandler handler) {
+  public void set_file_handler(WebuiCallbacks.FileHandler handler) {
     lib.webui_set_file_handler(window, handler);
   }
 
@@ -265,13 +274,14 @@ public class Webui {
    *        return full HTTP header and body.
    *        This deactivates any previous handler set with `set_file_handler`
    *
-   * @param handler The handler function: `void myHandler(size_t window, const
+   * @param handler The handler function: `public void myHandler(size_t window,
+   *                const
    *                char* filename,
    *                int* length)`
    *
    * @example myWindow.set_file_handler_window(myHandlerFunction);
    */
-  void set_file_handler_window(WebuiCallbacks.FileWindowHandler handler) {
+  public void set_file_handler_window(WebuiCallbacks.FileWindowHandler handler) {
     lib.webui_set_file_handler_window(window, handler);
   }
 
@@ -280,7 +290,7 @@ public class Webui {
    *
    * @example myWindow.is_shown();
    */
-  boolean is_shown() {
+  public boolean is_shown() {
     return lib.webui_is_shown(window);
   }
 
@@ -292,7 +302,7 @@ public class Webui {
    *
    * @example myWindow.set_icon("<svg>...</svg>", "image/svg+xml");
    */
-  void set_icon(String icon, String icon_type) {
+  public void set_icon(String icon, String icon_type) {
     lib.webui_set_icon(window, icon, icon_type);
   }
 
@@ -306,7 +316,7 @@ public class Webui {
    *
    * @example myWindow.send_raw("myJavaScriptFunc", myBuffer, 64);
    */
-  void send_raw(String function, Pointer raw, int size) {
+  public void send_raw(String function, Pointer raw, int size) {
     lib.webui_send_raw(window, function, raw, size);
   }
 
@@ -317,7 +327,7 @@ public class Webui {
    *
    * @example myWindow.set_hide(true);
    */
-  void set_hide(boolean status) {
+  public void set_hide(boolean status) {
     lib.webui_set_hide(window, status);
   }
 
@@ -329,7 +339,7 @@ public class Webui {
    *
    * @example myWindow.set_minimum_size(800, 600);
    */
-  void set_minimum_size(int width, int height) {
+  public void set_minimum_size(int width, int height) {
     lib.webui_set_minimum_size(window, width, height);
   }
 
@@ -343,7 +353,7 @@ public class Webui {
    * @example myWindow.set_profile("Bar", "/Home/Foo/Bar"); |
    *          myWindow.set_profile("", "");
    */
-  void set_profile(String name, String path) {
+  public void set_profile(String name, String path) {
     lib.webui_set_profile(window, name, path);
   }
 
@@ -355,7 +365,7 @@ public class Webui {
    *
    * @example myWindow.set_proxy("http://127.0.0.1:8888");
    */
-  void set_proxy(String proxy_server) {
+  public void set_proxy(String proxy_server) {
     lib.webui_set_proxy(window, proxy_server);
   }
 
@@ -378,7 +388,7 @@ public class Webui {
    *
    * @example myWindow.set_public(true);
    */
-  void set_public(boolean status) {
+  public void set_public(boolean status) {
     lib.webui_set_public(window, status);
   }
 
@@ -389,7 +399,7 @@ public class Webui {
    *
    * @example myWindow.navigate("http://domain.com");
    */
-  void navigate(String url) {
+  public void navigate(String url) {
     lib.webui_navigate(window, url);
   }
 
@@ -404,7 +414,7 @@ public class Webui {
    * @note This can break functionality of other windows if using the same
    *       web-browser.
    */
-  void delete_profile() {
+  public void delete_profile() {
     lib.webui_delete_profile(window);
   }
 
@@ -452,9 +462,9 @@ public class Webui {
    *
    * @return Returns True if the port is free and usable by WebUI
    *
-   * @example boolean ret = myWindow.set_port(8080);
+   * @example public boolean ret = myWindow.set_port(8080);
    */
-  boolean set_port(int port) {
+  public boolean set_port(int port) {
     return lib.webui_set_port(window, port);
   }
 
@@ -470,7 +480,7 @@ public class Webui {
    *
    * @example myWindow.set_event_blocking(true);
    */
-  void set_event_blocking(boolean status) {
+  public void set_event_blocking(boolean status) {
     lib.webui_set_event_blocking(window, status);
   }
 
@@ -481,7 +491,7 @@ public class Webui {
    *
    * @example myWindow.run("alert('Hello');");
    */
-  void run(String script) {
+  public void run(String script) {
     lib.webui_run(window, script);
   }
 
@@ -497,10 +507,10 @@ public class Webui {
    *
    * @return Returns True if there is no execution error
    *
-   * @example boolean err = myWindow.script("return 4 + 6;", 0, myBuffer,
+   * @example public boolean err = myWindow.script("return 4 + 6;", 0, myBuffer,
    *          myBufferSize);
    */
-  void script(String script, int timeout, String[] buffer, int buffer_length) {
+  public void script(String script, int timeout, String[] buffer, int buffer_length) {
     lib.webui_script(window, script, timeout, buffer, buffer_length);
   }
 
@@ -511,7 +521,7 @@ public class Webui {
    *
    * @example myWindow.set_runtime(WebuiConst.runtime.Deno);
    */
-  void set_runtime(WebuiConst.runtime runtime) {
+  public void set_runtime(WebuiConst.runtime runtime) {
     lib.webui_set_runtime(window, EnumUtils.toInteger(runtime));
   }
 
@@ -527,6 +537,10 @@ public class Webui {
     lib.webui_wait();
   }
 
+  public boolean waitAsync() {
+    return lib.webui_wait_async();
+  }
+
   /**
    * @brief Get user data that is set using `set_context()`.
    *
@@ -539,8 +553,8 @@ public class Webui {
    * 
    *          myWindow.set_context("myFunction", myData);
    * 
-   *          void myFunction(webui_event_t* e) {
-   *          void* myData = Webui.get_context(e);
+   *          public void myFunction(webui_event_t* e) {
+   *          public void* myData = Webui.get_context(e);
    *          }
    */
   public static Pointer get_context(WebuiCallbacks.WebUIEventT e) {
@@ -570,7 +584,7 @@ public class Webui {
    *
    * @return Returns True if OS is using high contrast theme
    *
-   * @example boolean hc = Webui.is_high_contrast();
+   * @example public boolean hc = Webui.is_high_contrast();
    */
   public static boolean is_high_contrast() {
     return Lib.INSTANCE.webui_is_high_contrast();
@@ -581,7 +595,8 @@ public class Webui {
    *
    * @return Returns True if the specified browser is available
    *
-   * @example boolean status = Webui.browser_exist(WebuiConst.browser.Chrome);
+   * @example public boolean status =
+   *          Webui.browser_exist(WebuiConst.browser.Chrome);
    */
   public static boolean browser_exist(WebuiConst.browser browser) {
     return Lib.INSTANCE.webui_browser_exist(EnumUtils.toInteger(browser));
@@ -806,7 +821,7 @@ public class Webui {
    *
    * @return Returns True if the certificate and the key are valid.
    *
-   * @example boolean ret = Webui.set_tls_certificate("-----BEGIN
+   * @example public boolean ret = Webui.set_tls_certificate("-----BEGIN
    *          CERTIFICATE-----\n...", "-----BEGIN PRIVATE KEY-----\n...");
    */
   public static boolean set_tls_certificate(String certificate_pem, String private_key_pem) {
@@ -837,7 +852,7 @@ public class Webui {
    *
    * @return Returns True if there is no execution error
    *
-   * @example boolean err = Webui.script_client(e, "return 4 + 6;", 0,
+   * @example public boolean err = Webui.script_client(e, "return 4 + 6;", 0,
    *          myBuffer, myBufferSize);
    */
   public static void script_client(WebuiCallbacks.WebUIEventT e, String script, int timeout, String[] buffer,
@@ -940,27 +955,27 @@ public class Webui {
   }
 
   /**
-   * @brief Get an argument as boolean at a specific index.
+   * @brief Get an argument as public boolean at a specific index.
    *
    * @param e     The event struct
    * @param index The argument position starting from 0
    *
-   * @return Returns argument as boolean
+   * @return Returns argument as public boolean
    *
-   * @example boolean myBool = Webui.get_bool_at(e, 0);
+   * @example public boolean myBool = Webui.get_bool_at(e, 0);
    */
   public static boolean get_bool_at(WebuiCallbacks.WebUIEventT e, int index) {
     return Lib.INSTANCE.webui_get_bool_at(e, index);
   }
 
   /**
-   * @brief Get the first argument as boolean.
+   * @brief Get the first argument as public boolean.
    *
    * @param e The event struct
    *
-   * @return Returns argument as boolean
+   * @return Returns argument as public boolean
    *
-   * @example boolean myBool = Webui.get_bool(e);
+   * @example public boolean myBool = Webui.get_bool(e);
    */
   public static boolean get_bool(WebuiCallbacks.WebUIEventT e) {
     return Lib.INSTANCE.webui_get_bool(e);
@@ -1030,10 +1045,10 @@ public class Webui {
   }
 
   /**
-   * @brief Return the response to JavaScript as boolean.
+   * @brief Return the response to JavaScript as public boolean.
    *
    * @param e The event struct
-   * @param b The boolean to be send to JavaScript
+   * @param b The public boolean to be send to JavaScript
    *
    * @example Webui.return_bool(e, true);
    */
@@ -1054,7 +1069,7 @@ public class Webui {
    *
    * @return Returns True if app is running
    *
-   * @example boolean status = Webui.interface_is_app_running();
+   * @example public boolean status = Webui.interface_is_app_running();
    */
   public static boolean interface_is_app_running() {
     return Lib.INSTANCE.webui_interface_is_app_runnint();

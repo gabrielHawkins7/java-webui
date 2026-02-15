@@ -1,14 +1,15 @@
-import com.sun.jna.Callback;
+package Native;
+
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
-import com.sun.jna.Structure;
-import com.sun.jna.ptr.IntByReference;
 
-interface Lib extends Library {
+import Webui.WebuiCallbacks;
 
-  Lib INSTANCE = (Lib) Native.load("rel/lin-x64/webui-2.so", Lib.class);
+public interface Lib extends Library {
+
+  Lib INSTANCE = (Lib) Native.load("rls/libwebui-2.so", Lib.class);
 
   /**
    * @brief Create a new WebUI window object.
@@ -43,6 +44,8 @@ interface Lib extends Library {
    * @example webui_wait();
    */
   void webui_wait();
+
+  boolean webui_wait_async();
 
   void webui_minimize(int window);
 

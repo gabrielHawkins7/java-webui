@@ -1,13 +1,15 @@
+package Webui;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
 import com.sun.jna.NativeLong;
 
-public class Main {
+import Webui.WebuiConst.browser;
 
-  public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
+public class Test {
+  public static void TestWV() {
 
     Webui win = new Webui();
 
@@ -29,14 +31,20 @@ public class Main {
 
     win.bind("getRandomNumber", getRandomNumber);
 
-    InputStream rawhtml = Main.class.getResourceAsStream("/index.html");
-    String html = new String(rawhtml.readAllBytes(), StandardCharsets.UTF_8);
+    InputStream rawhtml = Test.class.getResourceAsStream("/index.html");
+    String html = "";
+    try {
+      html = new String(rawhtml.readAllBytes(), StandardCharsets.UTF_8);
+    } catch (IOException e1) {
+      e1.printStackTrace();
+    }
 
-    win.show(html);
+    win.show_browser(html, 12);
 
     win.bind("closeWin", closeWin);
 
     win.set_size(800, 600);
     win.waitForWindowClose();
   }
+
 }

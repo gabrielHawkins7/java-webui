@@ -1,3 +1,5 @@
+package Webui;
+
 import com.sun.jna.Callback;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
@@ -42,21 +44,21 @@ public class WebuiCallbacks {
   /**
    * Callback interface for the file handler.
    */
-  interface FileHandler extends Callback {
+  public interface FileHandler extends Callback {
     Pointer invoke(String filename, IntByReference length);
   }
 
   /**
    * Callback interface for the file handler with window context.
    */
-  interface FileWindowHandler extends Callback {
+  public interface FileWindowHandler extends Callback {
     Pointer invoke(int window, String filename, IntByReference length);
   }
 
   /**
    * Callback interface for wrapper/interface bindings.
    */
-  interface InterfaceCallback extends Callback {
+  public interface InterfaceCallback extends Callback {
     void invoke(int window, int event_type, String element, int event_number, int bind_id);
   }
 }
