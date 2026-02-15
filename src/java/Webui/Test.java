@@ -6,8 +6,6 @@ import java.nio.charset.StandardCharsets;
 
 import com.sun.jna.NativeLong;
 
-import Webui.WebuiConst.browser;
-
 public class Test {
   public static void TestWV() {
 

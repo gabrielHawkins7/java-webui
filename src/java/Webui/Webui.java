@@ -68,7 +68,7 @@ public class Webui {
    *          |
    *          myWindow.show("index.html", WebuiConst.browser.Firefox);
    */
-  public boolean show_browser(String html, WebuiConst.browser browser) {
+  public boolean show_browser(String html, WebuiConst.BROWSER browser) {
     return lib.webui_show_browser(window, html, EnumUtils.toInteger(browser));
   }
 
@@ -521,7 +521,7 @@ public class Webui {
    *
    * @example myWindow.set_runtime(WebuiConst.runtime.Deno);
    */
-  public void set_runtime(WebuiConst.runtime runtime) {
+  public void set_runtime(WebuiConst.RUNTIME runtime) {
     lib.webui_set_runtime(window, EnumUtils.toInteger(runtime));
   }
 
@@ -598,7 +598,7 @@ public class Webui {
    * @example public boolean status =
    *          Webui.browser_exist(WebuiConst.browser.Chrome);
    */
-  public static boolean browser_exist(WebuiConst.browser browser) {
+  public static boolean browser_exist(WebuiConst.BROWSER browser) {
     return Lib.INSTANCE.webui_browser_exist(EnumUtils.toInteger(browser));
   }
 
@@ -795,7 +795,7 @@ public class Webui {
    *
    * @example Webui.set_config(WebuiConst.config.show_wait_connection, false);
    */
-  public static void set_config(WebuiConst.config option, boolean status) {
+  public static void set_config(WebuiConst.CONFIG option, boolean status) {
     Lib.INSTANCE.webui_set_config(EnumUtils.toInteger(option), status);
   }
 
