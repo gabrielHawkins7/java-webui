@@ -9,6 +9,7 @@ import Webui.WebuiCallbacks;
 
 public interface Lib extends Library {
 
+  
   Lib INSTANCE = (Lib) Native.load("rls/libwebui-2.so", Lib.class);
 
   /**
